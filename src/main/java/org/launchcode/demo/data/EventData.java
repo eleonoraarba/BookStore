@@ -13,6 +13,7 @@ public class EventData {
     public static Collection<Event> getAll(){
         return events.values();
     }
+
     //get a single event
     public static Event getById(int id){
         return events.get(id);
@@ -22,6 +23,7 @@ public class EventData {
     public static void add(Event event){
         events.put(event.getId(), event);
     }
+
     //remove event
     public static void remove(int id){
         events.remove(id);

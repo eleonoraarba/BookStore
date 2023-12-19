@@ -3,21 +3,25 @@
 <head th:replace="fragments :: head "></head>
 <head th:replace="fragments :: head "></head>
 <body class="container">
-<h1>All Events</h1>
+<h1>All Categories</h1>
 
 <nav th:replace="fragments :: header"></nav>
 
-<p th:unless="${events} and ${events.size()}">No events!</p>
+<p th:unless="${eventCategories} and ${eventCategories.size()}">No events!</p>
 <table class="table table-striped">
     <thead>
-        <tr>
-            <th>Event Name</th>
-        </tr>
+    <tr>
+        <th>Name</th>
+    </tr>
     </thead>
-    <tr th:block th:each="event : ${events}">
-        <td><a th:href=" '/events/detail?eventId=' + ${event.id}" th:text="${event.name}"></a></td>
+    <tr th:block th:each="eventCategory : ${eventCategories}">
+        <td><a th:text="${eventCategory.name}" th:href="'/events?categoryId=' + ${eventCategory.getId()}"></a></td>
+
+
     </tr>
 </table>
+
+
 
 </body>
 </html>
