@@ -19,8 +19,7 @@ import { useNavigate } from "react-router-dom";
         id:number;
         username: String;
         password: String; 
-        admin:boolean;
-        
+    
       }
 
     const SignIn = () => {
@@ -82,12 +81,14 @@ import { useNavigate } from "react-router-dom";
         .then((response: any): void => {
           console.log(response);
           console.log("SignIn Successful");
-        
-            if (response.data.admin == true) {
-              navigate("/adminPage");
-            } else {
-              navigate("/userPage");
-            }
+         
+           const userRole = response.data;
+
+           if (userRole === "admin") {
+               navigate("/adminPage");
+           } else if (userRole === "user") {
+               navigate("/userPage");
+           }
          
         })
         .catch((error) => {

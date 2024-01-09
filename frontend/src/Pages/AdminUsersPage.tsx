@@ -11,7 +11,6 @@ interface User {
   id:number;
   username: String;
   password: String; 
-  admin:boolean;
   
 }
 
@@ -42,19 +41,19 @@ const AdminUsersPage = () => {
   }
 
   const [admin, setAdmin] = React.useState<boolean>(false);
+
   const onChangeAdmin = (event: any): void => {
-    setAdmin(event.target.checked);
+      setAdmin(event.target.checked)
   };
 
   const AddUser = (event: any): void => {
     const newUser = {
       username: username,
       password: password,
-      admin: admin
     };
   
     axios
-      .post("http://localhost:8080/adminPage/insertUser", newUser, {
+     .post(`http://localhost:8080/adminPage/insertUser?admin=${admin}`, newUser, {
         headers: { "Content-Type": "application/json" },
       })
       .then((response: any): void => {
@@ -83,7 +82,7 @@ const AdminUsersPage = () => {
     { field: 'id', headerName: 'ID', width: 90 },
     { field: 'username', headerName: 'Username', width: 150 },
     { field: 'password', headerName: 'Password', width: 150 },
-    { field: 'admin', headerName: 'Admin', width: 110 },
+  
   ];
 
   const DeleteUser = () => {
@@ -128,10 +127,9 @@ const AdminUsersPage = () => {
         const updatedUser = {
           username: usernameUpdate,
           password: passwordUpdate,
-          admin: adminUpdate,
         };
         axios
-        .post(`http://localhost:8080/adminPage/updateUser?id=${userId}`,updatedUser, {
+        .post(`http://localhost:8080/adminPage/updateUser?id=${userId}&admin=${adminUpdate}`,updatedUser, {
           headers: { "Content-Type": "application/json" },
         })
         .then((response) => {

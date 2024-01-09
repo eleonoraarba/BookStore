@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void updateUser(Long id, String newUsername, String newPassword, boolean newAdmin) {
+    public void updateUser(Long id, String newUsername, String newPassword) {
         if (id == null) {
             throw new IllegalArgumentException("User ID cannot be null");
         }
@@ -63,8 +63,6 @@ public class UserServiceImpl implements UserService {
             if (newPassword != null && !newPassword.isEmpty()) {
                 existingUser.setPassword(newPassword);
             }
-
-            existingUser.setAdmin(newAdmin);
 
 
             userRepository.save(existingUser);

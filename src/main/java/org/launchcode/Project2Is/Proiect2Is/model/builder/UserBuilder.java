@@ -24,10 +24,6 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setAdmin (boolean admin){
-        user.setAdmin(admin);
-        return this;
-    }
     public User build(){
         return user;
     }

@@ -13,6 +13,6 @@ public interface UserService {
     User findById(Long userId);
     void deleteById(Long id);
     User findUserByUsername(String username);
-    void updateUser(Long id, String newUsername, String newPassword, boolean newAdmin);
+    void updateUser(Long id, String newUsername, String newPassword);
 
 }

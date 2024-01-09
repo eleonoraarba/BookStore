@@ -5,6 +5,7 @@ import org.launchcode.Project2Is.Proiect2Is.model.Book;
 import org.launchcode.Project2Is.Proiect2Is.model.User;
 import org.launchcode.Project2Is.Proiect2Is.model.builder.BookBuilder;
 import org.launchcode.Project2Is.Proiect2Is.service.book.BookServiceImpl;
+import org.launchcode.Project2Is.Proiect2Is.service.security.RoleUserServiceImpl;
 import org.launchcode.Project2Is.Proiect2Is.service.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ public class AdminController {
     @Autowired
     private BookServiceImpl bookServiceImpl;
 
+    @Autowired
+    private RoleUserServiceImpl roleUserService;
 
     @GetMapping("/showUsers")
     public ResponseEntity<List<User>> displayUsers(){
@@ -31,8 +34,15 @@ public class AdminController {
     }
 
     @PostMapping("/insertUser")
-    public ResponseEntity<String> insertUser(@RequestBody User newUser){
+    public ResponseEntity<String> insertUser(@RequestBody User newUser, @RequestParam boolean admin){
+
         userServiceImplementation.insert(newUser);
+        if(admin){
+            roleUserService.insertUserRole(newUser, "admin");
+        }
+        else{
+            roleUserService.insertUserRole(newUser, "user");
+        }
         return ResponseEntity.ok().body("Insert successfull");
     }
 
@@ -40,17 +50,23 @@ public class AdminController {
     @Transactional
     public ResponseEntity<String> deleteUser(@RequestParam(required = true) Long id){
         userServiceImplementation.deleteById(id);
+        roleUserService.deleteById(id);
         return ResponseEntity.ok().body("Delete successfull");
     }
 
     @PostMapping("/updateUser")
     @Transactional
-    public ResponseEntity<String> updateUser(@RequestParam(required = true) Long id,@RequestBody User user){
+    public ResponseEntity<String> updateUser(@RequestParam(required = true) Long id,@RequestBody User user, @RequestParam boolean admin){
         String username= user.getUsername();;
         String password= user.getPassword();
-        boolean admin= user.isAdmin();
 
-        userServiceImplementation.updateUser(id,username,password,admin);
+        if(admin){
+            roleUserService.updateUserRole(id, "admin");
+        }
+        else{
+            roleUserService.updateUserRole(id, "user");
+        }
+        userServiceImplementation.updateUser(id,username,password);
 
         return ResponseEntity.ok().body("Update successfull ");
     }

@@ -3,6 +3,8 @@ package org.launchcode.Project2Is.Proiect2Is.controller;
 
 import org.launchcode.Project2Is.Proiect2Is.model.User;
 import org.launchcode.Project2Is.Proiect2Is.service.authentification.AuthentificationServiceImpl;
+import org.launchcode.Project2Is.Proiect2Is.service.security.RoleUserService;
+import org.launchcode.Project2Is.Proiect2Is.service.security.RoleUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +16,17 @@ public class LoginController {
     @Autowired
     private AuthentificationServiceImpl authentificationService;
 
+    @Autowired
+    private RoleUserServiceImpl roleUserService;
+
     @PostMapping("/insert")
     public ResponseEntity<String> insertUser(@RequestBody User user ){
 
-        user.setAdmin(false);
+
        String message=authentificationService.createAccount(user);
 
        if(message.equals("Account Created")){
+           roleUserService.insertUserRole(user, "user");
            return ResponseEntity.ok().body(message);
        }
        else{
@@ -38,7 +44,9 @@ public class LoginController {
             return ResponseEntity.badRequest().body("Invalid Credentials");
         }
         else{
-            return ResponseEntity.ok(newuser);
+
+            return ResponseEntity.ok(roleUserService.findRoleById(newuser.getId()));
+
         }
     }
 }
