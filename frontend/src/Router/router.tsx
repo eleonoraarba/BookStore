@@ -6,9 +6,10 @@ import AdminUsersPage from "../Pages/AdminUsersPage";
 import AdminBooksPage from "../Pages/AdminBooksPage";
 
 const routes: RouteObject[] = [
+ 
 
     {
-        path: "/Login",
+        path: "/",
         element: <SignIn />
     },
 

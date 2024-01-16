@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.launchcode.Project2Is.Proiect2Is.model.Book;
-import org.launchcode.Project2Is.Proiect2Is.service.book.BookServiceImpl;
+import org.launchcode.Project2Is.Proiect2Is.service.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +21,13 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    private BookServiceImpl bookServiceImplementation;
+    private BookService bookService;
 
     private List<Map<Book, Integer>> order = new ArrayList<>();
 
     @GetMapping("/showBooks")
     public ResponseEntity<List<Book>> displayBooks(){
-        List<Book> books= bookServiceImplementation.findAll();
+        List<Book> books= bookService.findAll();
 
         return ResponseEntity.status(HttpStatus.OK).body(books);
     }
@@ -75,9 +75,9 @@ public class UserController {
                     Long quantity = Long.valueOf(entry.getValue());
 
                     if (book.getStock() > quantity) {
-                        bookServiceImplementation.updateStock(book.getId(), book.getStock() - quantity);
+                        bookService.updateStock(book.getId(), book.getStock() - quantity);
                     } else {
-                        bookServiceImplementation.deleteById(book.getId());
+                        bookService.deleteById(book.getId());
                     }
 
                 }

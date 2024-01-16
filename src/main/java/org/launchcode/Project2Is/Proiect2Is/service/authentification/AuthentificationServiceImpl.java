@@ -1,6 +1,7 @@
 package org.launchcode.Project2Is.Proiect2Is.service.authentification;
 
 import org.launchcode.Project2Is.Proiect2Is.model.User;
+import org.launchcode.Project2Is.Proiect2Is.repository.user.RoleRepository;
 import org.launchcode.Project2Is.Proiect2Is.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,9 @@ public class AuthentificationServiceImpl implements AuthentificationService{
     private UserRepository userRepository;
 
     public AuthentificationServiceImpl(UserRepository userRepository) {
+
         this.userRepository = userRepository;
+
     }
     @Override
     public User findUserByUsername(String username) {

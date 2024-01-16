@@ -1,5 +1,6 @@
 package org.launchcode.Project2Is.Proiect2Is.service.user;
 
+import org.launchcode.Project2Is.Proiect2Is.model.Role;
 import org.launchcode.Project2Is.Proiect2Is.model.User;
 import org.springframework.stereotype.Component;
 

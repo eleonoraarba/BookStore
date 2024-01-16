@@ -114,7 +114,7 @@ const UserPage = () => {
         }}
       >
       <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginLeft: 2 }}>
-        <Box sx={{ height: 400, width: '60%',  backgroundColor: 'rgba(128, 128, 128, 0.8)' }}>
+        <Box sx={{ height: 400, width: '80%',  backgroundColor: 'rgba(128, 128, 128, 0.8)' }}>
           <DataGrid
             rows={books}
             columns={columns}

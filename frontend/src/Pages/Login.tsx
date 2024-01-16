@@ -76,24 +76,25 @@ import { useNavigate } from "react-router-dom";
     
         axios
         .post("http://localhost:8080/users/signIn", User, {
-          headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" },
         })
         .then((response: any): void => {
-          console.log(response);
-          console.log("SignIn Successful");
-         
-           const userRole = response.data;
+            console.log(response.data);
+            console.log("SignIn Successful");
 
-           if (userRole === "admin") {
-               navigate("/adminPage");
-           } else if (userRole === "user") {
-               navigate("/userPage");
-           }
-         
+            const userRole = response.data;
+
+            if (userRole === "ADMIN") {
+                navigate("/adminPage");
+            } else if (userRole === "USER") {
+                navigate("/userPage");
+            } else {
+                alert("Unknown role");
+            }
         })
         .catch((error) => {
-          console.error(error.response.data);
-          alert(`Error: ${error.response.data}`);
+            console.error(error.response?.data);
+            alert(`Error: ${error.response?.data}`);
         });
       
     

@@ -2,9 +2,8 @@ package org.launchcode.Project2Is.Proiect2Is.controller;
 
 
 import org.launchcode.Project2Is.Proiect2Is.model.User;
-import org.launchcode.Project2Is.Proiect2Is.service.authentification.AuthentificationServiceImpl;
-import org.launchcode.Project2Is.Proiect2Is.service.security.RoleUserService;
-import org.launchcode.Project2Is.Proiect2Is.service.security.RoleUserServiceImpl;
+import org.launchcode.Project2Is.Proiect2Is.service.authentification.AuthentificationService;
+import org.launchcode.Project2Is.Proiect2Is.service.security.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,19 +13,23 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     @Autowired
-    private AuthentificationServiceImpl authentificationService;
+    private AuthentificationService authentificationService;
 
     @Autowired
-    private RoleUserServiceImpl roleUserService;
+    private RoleService roleUserService;
 
     @PostMapping("/insert")
     public ResponseEntity<String> insertUser(@RequestBody User user ){
+        User newuser = User.builder()
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .role((roleUserService.findByRole("USER")))
+                .build();
 
-
-       String message=authentificationService.createAccount(user);
+        String message=authentificationService.createAccount(newuser);
 
        if(message.equals("Account Created")){
-           roleUserService.insertUserRole(user, "user");
+
            return ResponseEntity.ok().body(message);
        }
        else{
@@ -45,7 +48,7 @@ public class LoginController {
         }
         else{
 
-            return ResponseEntity.ok(roleUserService.findRoleById(newuser.getId()));
+            return ResponseEntity.ok(newuser.getRoles().get(0).getRole());
 
         }
     }

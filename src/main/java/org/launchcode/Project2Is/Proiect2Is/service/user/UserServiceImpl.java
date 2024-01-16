@@ -1,5 +1,6 @@
 package org.launchcode.Project2Is.Proiect2Is.service.user;
 
+import org.launchcode.Project2Is.Proiect2Is.model.Role;
 import org.launchcode.Project2Is.Proiect2Is.model.User;
 import org.launchcode.Project2Is.Proiect2Is.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -64,12 +66,12 @@ public class UserServiceImpl implements UserService {
                 existingUser.setPassword(newPassword);
             }
 
-
-            userRepository.save(existingUser);
+            this.insert(existingUser);
         } else {
             throw new RuntimeException("User not found with id: " + id);
         }
     }
+
 
     private String hashPassword(String password) {
         try {
